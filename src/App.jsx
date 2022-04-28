@@ -1,6 +1,7 @@
-import logo from "./logo.svg";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import SignUp from "./components/SignUp";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
@@ -10,7 +11,10 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
       </header>
-      <SignUp />
+      <Routes>
+        <Route path="/" element={<SignUp />} />
+        <Route path="/homepage" element={<HomePage />} />
+      </Routes>
     </div>
   );
 }

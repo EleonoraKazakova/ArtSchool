@@ -24,9 +24,9 @@ export async function addDocumentWithId(path, id, data) {
   let payload = { data: undefined, error: false };
   try {
     const documentReferense = doc(fireStore, path, id);
-    await setDoc(documentReferense);
+    await setDoc(documentReferense, data);
 
-    payload = { data: `Document with id ${id} is created!`, error: true };
+    payload = { data: `Document with id ${id} is created!`, error: false };
   } catch (error) {
     payload = { data: error, error: true };
   }

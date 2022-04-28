@@ -2,12 +2,11 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { authentication } from "./firesbase";
 
 export async function createUser(email, password) {
-  const userCredantial = createUserWithEmailAndPassword(
+  const userCredential = await createUserWithEmailAndPassword(
     authentication,
     email,
     password
   );
 
-  console.log("userCredantial:", userCredantial);
-  return userCredantial.user.uid;
+  return userCredential.user.uid;
 }
