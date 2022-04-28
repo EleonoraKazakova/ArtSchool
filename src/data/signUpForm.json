@@ -1,0 +1,13 @@
+{
+  "name": { "label": "Full name", "placeholder": "Ex.: David", "type": "text" },
+  "email": {
+    "label": "Email",
+    "placeholder": "abcd@gmail.com",
+    "type": "email"
+  },
+  "password": {
+    "label": "Password",
+    "placeholder": "********",
+    "type": "password"
+  }
+}
