@@ -2,11 +2,12 @@ import { useState } from "react";
 import { createUser } from "../scripts/firebaseAuth";
 import { addDocumentWithId } from "../scripts/fireStore";
 import InputField from "./InputField";
-import signUpForm from "../data/signUpForm.json";
+import form from "../data/signUpForm.json";
 import { useNavigate } from "react-router-dom";
 
-export default function SignUp() {
+export default function SignUp({ uidState }) {
   const navigate = useNavigate();
+  const [uid, setUid] = uidState;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,20 +21,21 @@ export default function SignUp() {
 
     const payload = await addDocumentWithId("users", newUID, newUser);
     console.log("payload.error:", payload.error);
+
     if (payload.error) alert("Couldn't create user");
-    else navigate("/homepage");
+    else {
+      setUid(newUID);
+      navigate("/homepage");
+    }
   }
 
   return (
     <div>
       <h1>Create accaunt</h1>
       <form onSubmit={onCreate}>
-        <InputField setup={signUpForm.name} state={[name, setName]} />
-        <InputField setup={signUpForm.email} state={[email, setEmail]} />
-        <InputField
-          setup={signUpForm.password}
-          state={[password, setPassword]}
-        />
+        <InputField setup={form.name} state={[name, setName]} />
+        <InputField setup={form.email} state={[email, setEmail]} />
+        <InputField setup={form.password} state={[password, setPassword]} />
         <button>Submit</button>
       </form>
     </div>
