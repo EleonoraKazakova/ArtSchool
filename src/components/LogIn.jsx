@@ -1,6 +1,6 @@
 import InputField from "./InputField";
 import form from "../data/logInForm.json";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../scripts/firebaseAuth";
 
@@ -20,6 +20,8 @@ export default function LogIn({ uidState }) {
     } else alert("Could not login, try again");
   }
 
+  async function onRecover() {}
+
   return (
     <div>
       <p>Please login to access to our platform.</p>
@@ -28,6 +30,8 @@ export default function LogIn({ uidState }) {
         <InputField setup={form.password} state={[password, setPassword]} />
         <button>Submit</button>
       </form>
+      <p>Did you forget your password? Then click here.</p>
+      <Link to="/recover-password">Recover password</Link>
     </div>
   );
 }
