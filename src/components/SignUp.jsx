@@ -31,7 +31,7 @@ export default function SignUp({ uidState }) {
 
   return (
     <div>
-      <h1>Create accaunt</h1>
+      <h1>Create account</h1>
       <form onSubmit={onCreate}>
         <InputField setup={form.name} state={[name, setName]} />
         <InputField setup={form.email} state={[email, setEmail]} />

@@ -10,8 +10,8 @@ export default function LoggedRoutes({ uidState }) {
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/signup" element={<SignUp uidState={uidState} />} />
-        <Route path="/homepage" element={<HomePage />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/homepage" element={<HomePage uidState={uidState} />} />
+        <Route path="/login" element={<LogIn uidState={uidState} />} />
       </Routes>
     </div>
   );

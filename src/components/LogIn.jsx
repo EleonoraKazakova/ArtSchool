@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../scripts/firebaseAuth";
 
-export default function LogIn() {
+export default function LogIn({ uidState }) {
   const navigate = useNavigate();
-  //const [uid, setUid] = uidState;
+  const [uid, setUid] = uidState;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +14,10 @@ export default function LogIn() {
   async function onLogin(event) {
     event.preventDefault();
     const returningUID = await loginUser(email, password);
-    console.log("returningUID:", returningUID);
+    if (returningUID) {
+      setUid(returningUID);
+      navigate("/homepage");
+    } else alert("Could not login, try again");
   }
 
   return (

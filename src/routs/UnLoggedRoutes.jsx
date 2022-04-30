@@ -9,7 +9,7 @@ export default function UnLoggedRoutes({ uidState }) {
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/signup" element={<SignUp uidState={uidState} />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/login" element={<LogIn uidState={uidState} />} />
         <Route path="*" element={<WelcomePage />} />
       </Routes>
     </div>
