@@ -7,7 +7,7 @@ import { useUID } from "../state/UIDProvider";
 
 export default function LogIn() {
   const navigate = useNavigate();
-  const { setUid } = useUID();
+  const { setUID } = useUID();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,12 +16,10 @@ export default function LogIn() {
     event.preventDefault();
     const returningUID = await loginUser(email, password);
     if (returningUID) {
-      setUid(returningUID);
+      setUID(returningUID);
       navigate("/homepage");
-    } else alert("Could not login, try again");
+    } //else alert("Could not login, try again");
   }
-
-  async function onRecover() {}
 
   return (
     <div>

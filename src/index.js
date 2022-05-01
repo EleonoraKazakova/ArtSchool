@@ -1,17 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.sass";
-import App from "./App";
+import { createRoot } from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { UIDProvider } from "./state/UIDProvider";
+import React from "react";
+import "./index.sass";
+import App from "./App";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const container = document.getElementById("root");
+const root = createRoot(container);
 root.render(
-  <React.StrictMode>
-    <UIDProvider>
-      <App />
-    </UIDProvider>
-  </React.StrictMode>
+  <UIDProvider>
+    <App />
+  </UIDProvider>
 );
 
 reportWebVitals();

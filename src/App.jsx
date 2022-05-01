@@ -1,4 +1,3 @@
-import { UIDProvider } from "./state/UIDProvider";
 import "./App.sass";
 import { useState } from "react";
 import LoggedRoutes from "./routs/LoggedRoutes";
@@ -7,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { useUID } from "./state/UIDProvider";
 
 function App() {
-  //const [uid, setUid] = useState(null);
   const { uid } = useUID();
   return (
     <div className="App">

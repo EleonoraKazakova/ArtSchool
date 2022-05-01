@@ -1,9 +1,10 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { authentication } from "./firesbase";
+import { async } from "@firebase/util";
 import {
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import { authentication } from "./firesbase";
 
 export async function createUser(email, password) {
   const userCredential = await createUserWithEmailAndPassword(
@@ -27,4 +28,10 @@ export async function loginUser(email, password) {
 
 export async function recoverUser(email) {
   await sendPasswordResetEmail(authentication, email);
+}
+
+export async function currentUser() {
+  const currentUser = authentication.currentUser;
+  console.log("currentUser:", currentUser);
+  return currentUser;
 }
