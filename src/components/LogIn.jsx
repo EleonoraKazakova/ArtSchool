@@ -3,10 +3,11 @@ import form from "../data/logInForm.json";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../scripts/firebaseAuth";
+import { useUID } from "../state/UIDProvider";
 
-export default function LogIn({ uidState }) {
+export default function LogIn() {
   const navigate = useNavigate();
-  const [uid, setUid] = uidState;
+  const { setUid } = useUID();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

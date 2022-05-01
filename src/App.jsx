@@ -1,14 +1,14 @@
-import { Routes, Route } from "react-router-dom";
+import { UIDProvider } from "./state/UIDProvider";
 import "./App.sass";
-import SignUp from "./components/SignUp";
-import HomePage from "./components/HomePage";
 import { useState } from "react";
 import LoggedRoutes from "./routs/LoggedRoutes";
 import UnLoggedRoutes from "./routs/UnLoggedRoutes";
-import { BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { useUID } from "./state/UIDProvider";
 
 function App() {
-  const [uid, setUid] = useState(null);
+  //const [uid, setUid] = useState(null);
+  const { uid } = useUID();
   return (
     <div className="App">
       <header className="App-header">
@@ -17,8 +17,8 @@ function App() {
         </p>
       </header>
       <BrowserRouter>
-        {uid && <LoggedRoutes uidState={[uid, setUid]} />}
-        {!uid && <UnLoggedRoutes uidState={[uid, setUid]} />}
+        {uid && <LoggedRoutes />}
+        {!uid && <UnLoggedRoutes />}
       </BrowserRouter>
     </div>
   );

@@ -4,10 +4,12 @@ import { addDocumentWithId } from "../scripts/fireStore";
 import InputField from "./InputField";
 import form from "../data/signUpForm.json";
 import { useNavigate } from "react-router-dom";
+import { useUID } from "../state/UIDProvider";
 
-export default function SignUp({ uidState }) {
+export default function SignUp() {
   const navigate = useNavigate();
-  const [uid, setUid] = uidState;
+  const { setUid } = useUID();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,7 @@ export default function SignUp({ uidState }) {
 
     const newUID = await createUser(email, password);
 
-    const newUser = { name: name };
+    const newUser = { name: name, type: "student" };
 
     const payload = await addDocumentWithId("users", newUID, newUser);
     console.log("payload.error:", payload.error);
