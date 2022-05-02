@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
-import { getDocument, getCollection } from "../scripts/fireStore";
+import {
+  getDocument,
+  getCollection,
+  updateDocument,
+  deleteDocument,
+} from "../scripts/fireStore";
 import { Link } from "react-router-dom";
 
 export default function Courses() {
-  const [courses, setCourses] = useState({ subCategories: [] });
   const [artCourses, setArtCourses] = useState([]);
-
+  const path = "artSchool";
   useEffect(() => {
-    const path = "artSchool";
     async function loadData(path) {
       const data = await getCollection(path);
       setArtCourses(data);
@@ -17,22 +20,21 @@ export default function Courses() {
 
   console.log("artCourses:", artCourses);
 
-  useEffect(() => {
-    async function loadData(path) {
-      const data = await getDocument(path);
-      setCourses(data);
-    }
-    loadData("artSchool/courses");
-  }, []);
+  async function onDelete(event, id) {
+    event.preventDefault();
+    await deleteDocument(`artSchool/${id}`);
+    const newCourses = artCourses.filter((course) => course.id !== id);
+    setArtCourses(newCourses);
+  }
 
   const artCourseCard = artCourses.map((item) => (
-    <div>
+    <div key={item.id}>
       <Link to={`/courses/${item.type}`}>{item.title} </Link>
       {item.description}
       <button>
         <Link to={`/courses/${item.type}/edit`}>Edit</Link>
       </button>
-      <button>Delete</button>
+      <button onClick={(event) => onDelete(event, item.id)}>Delete</button>
     </div>
   ));
   return (
