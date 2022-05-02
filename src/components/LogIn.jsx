@@ -17,7 +17,7 @@ export default function LogIn() {
     const returningUID = await loginUser(email, password);
     if (returningUID) {
       setUID(returningUID);
-      navigate("/homepage");
+      navigate("/");
     } //else alert("Could not login, try again");
   }
 
