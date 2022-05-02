@@ -9,6 +9,9 @@ import { useState, useEffect } from "react";
 import Courses from "../components/Courses";
 import Course from "../components/Course";
 import CourseEdit from "../components/CourseEdit";
+import CourseCreate from "../components/CourseCreate";
+import StudentsList from "../components/StudentsList";
+import CoursesForStudents from "../components/CoursesForStudents";
 
 export default function LoggedRoutes() {
   const currentUser = authentication.currentUser.uid;
@@ -30,10 +33,14 @@ export default function LoggedRoutes() {
       <Routes>
         <Route
           path="/"
-          element={user.type === "teacher" ? <Courses /> : <WelcomePage />}
+          element={
+            user.type === "teacher" ? <Courses /> : <CoursesForStudents />
+          }
         />
         <Route path="/:courses/:course" element={<Course />} />
         <Route path="/:courses/:course/edit" element={<CourseEdit />} />
+        <Route path="/course-create" element={<CourseCreate />} />
+        <Route path="/students-list" element={<StudentsList />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/login" element={<LogIn />} />

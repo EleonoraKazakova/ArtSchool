@@ -8,7 +8,7 @@ import { useUID } from "../state/UIDProvider";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { setUid } = useUID();
+  const { setUID } = useUID();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ export default function SignUp() {
 
     if (payload.error) alert("Couldn't create user");
     else {
-      setUid(newUID);
+      setUID(newUID);
       navigate("/homepage");
     }
   }

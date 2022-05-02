@@ -39,9 +39,14 @@ export default function Courses() {
   ));
   return (
     <div>
+      <but>
+        <Link to="/students-list">Students</Link>
+      </but>
       {artCourseCard}
 
-      <but>Add</but>
+      <button>
+        <Link to="/course-create">Add</Link>
+      </button>
     </div>
   );
 }
