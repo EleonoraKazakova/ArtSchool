@@ -29,6 +29,8 @@ export default function LogIn() {
         <InputField setup={form.password} state={[password, setPassword]} />
         <button>Submit</button>
       </form>
+      <p>Haven't you regestered yet? Then click here.</p>
+      <Link to="/signup">Signup</Link>
       <p>Did you forget your password? Then click here.</p>
       <Link to="/recover-password">Recover password</Link>
     </div>
