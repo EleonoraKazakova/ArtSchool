@@ -25,22 +25,30 @@ export default function NavigationBar() {
 
   return (
     <div className="navigationBar-content">
-      <Link to="/">
-        <img src={Logo} className="navigationBar-logo" />
-      </Link>
-      {uid !== null && user.type === "teacher" ? (
-        <Link to="/students-list">
-          <p>Students</p>
+      <div className="navigationBar-left-block">
+        <Link to="/">
+          <img src={Logo} className="navigationBar-logo" />
         </Link>
-      ) : null}
-      {userName}
-      {uid !== null ? (
-        <p onClick={() => setUID(null)}>Logout</p>
-      ) : (
-        <Link to="/login">
-          <p>Login</p>
+        ArtSchool
+      </div>
+      <div className="navigationBar-right-block">
+        <Link to="/">
+          <p>Courses</p>
         </Link>
-      )}
+        {uid !== null && user.type === "teacher" ? (
+          <Link to="/students-list">
+            <p>Students</p>
+          </Link>
+        ) : null}
+        <p className="navigationBar-user">{userName}</p>
+        {uid !== null ? (
+          <p onClick={() => setUID(null)}>Logout</p>
+        ) : (
+          <Link to="/login">
+            <p>Login</p>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

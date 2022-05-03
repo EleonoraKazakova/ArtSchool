@@ -1,0 +1,82 @@
+.courses-for-teacher-card
+  display: flex
+  flex-direction: column
+  width: 250px
+  height: 350px
+  background-color: #FED5CA
+  padding: 20px
+  justify-content: space-between
+  color: #774335
+  align-items: center
+  gap: 10px
+  border-radius: 5px
+  
+
+.courses-for-teacher-img
+  width: 210px
+  height: 160px
+  object-fit: cover
+
+.courses-for-teacher-icon
+  height: 30px
+  overflow: hidden
+
+.tooltip 
+  position: relative
+  display: inline-block
+
+.tooltip .tooltiptext 
+  visibility: hidden
+  width: 67px
+  background-color: black
+  color: #fff
+  text-align: center
+  border-radius: 6px
+  padding: 5px 0
+  position: absolute
+  z-index: 1
+  bottom: 150%
+  left: 170%
+  margin-left: -60px
+
+
+.tooltip .tooltiptext::after 
+  content: ""
+  position: absolute
+  top: 100%
+  left: 50%
+  margin-left: -5px
+  border-width: 5px
+  border-style: solid
+  border-color: black transparent transparent transparent
+
+
+.tooltip:hover .tooltiptext 
+  visibility: visible
+
+.courses-for-teacher-block
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  grid-column-gap: 40px
+  grid-row-gap: 40px
+  padding: 20px
+
+.courses-for-teacher-empty
+  display: flex
+  flex-direction: column
+  width: 250px 
+  height: 350px
+  padding: 20px
+  color: white
+  align-items: center
+  justify-content: center
+  gap: 10px
+  border: 3px dashed  #e6c2b9
+  border-radius: 5px  
+  
+
+.courses-for-teacher-edit
+  display: flex
+  justify-content: space-between
+  width: 100%
+

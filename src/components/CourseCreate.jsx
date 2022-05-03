@@ -12,6 +12,8 @@ export default function CourseCreate() {
   const [courses, setCourses] = useState([]);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
+  //const [content, setContent] = useState("");
+  const [link, setLink] = useState([]);
 
   useEffect(() => {
     const path = `artSchool`;
@@ -36,6 +38,7 @@ export default function CourseCreate() {
       id: id,
       description: description,
       imgURL: "",
+      link: link,
     };
 
     const fileName = `course-${title}.jpg`;
@@ -51,13 +54,43 @@ export default function CourseCreate() {
     if (newCourse.title === "") return;
     await addDocument(`artSchool/${id}`, newCourse);
 
-    clearForm("courses:", courses);
+    clearForm();
+    navigate(-1);
   }
-  console.log();
+
+  function createLink() {
+    setLink([...link, ""]);
+  }
+
   return (
     <div className="admin-grid">
       <h1>Create course</h1>
       <form onSubmit={onCreate} className="admin-form">
+        <button onClick={createLink}>Create link</button>
+        {link.map((item, index) => (
+          <input
+            type="text"
+            value={item}
+            onChange={(event) =>
+              setLink(
+                link.map((el, indexEl) =>
+                  indexEl === index ? event.target.value : el
+                )
+              )
+            }
+          />
+        ))}
+        <div>
+          <label for="url">Add link</label>
+          <input
+            type="text"
+            id="url"
+            onChange={(event) => setLink(event.target.value)}
+          />
+          <label className="courseCreate-button" for="url">
+            Add more links
+          </label>
+        </div>
         <div>
           <label>Title</label>
           <input
@@ -77,15 +110,29 @@ export default function CourseCreate() {
             onChange={(event) => setDescription(event.target.value)}
           />
         </div>
+        {/*<div>
+          <label for="url">Link</label>
+          <input
+            type="text"
+            id="url"
+            onChange={(event) => setLink(event.target.value)}
+          />
+          <label className="courseCreate-button" for="url">
+            Add more links
+          </label>
+  </div>*/}
 
         <div className="admin-label">
-          <label className="admin-choose-image">Choose image</label>
+          <label className="courseCreate-button" for="upload">
+            Choose image
+          </label>
           <img
             src={file !== null ? URL.createObjectURL(file) : EmptyImg}
             className="courseCreate-img"
           />
           <input
             type="file"
+            id="upload"
             accept="image/png, image/jpeg"
             onChange={(event) => setFile(event.target.files[0])}
           />
