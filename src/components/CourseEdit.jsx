@@ -1,9 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createFile } from "../scripts/cloudStorage";
+import { createFile, deleteFile } from "../scripts/cloudStorage";
 import { getDocument, updateDocument } from "../scripts/fireStore";
 import EmptyImg from "../images/empty.jpg";
 import "../styles/courseEdit.sass";
+import { ExternalLink } from "react-external-link";
+import Xmark from "../images/xmark.svg";
 
 export default function CourseEdit() {
   const params = useParams();
@@ -14,7 +16,13 @@ export default function CourseEdit() {
   const [title, setTitle] = useState("");
   const [id, setId] = useState("");
   const [file, setFile] = useState(null);
+  const [img, setImg] = useState(EmptyImg);
   const [description, setDescription] = useState("");
+  const [links, setLinks] = useState([]);
+  const [documents, setDocuments] = useState([]);
+
+  let collectedURL = [];
+  let documentURL;
 
   const path = `artSchool/${params.course}`;
 
@@ -23,38 +31,94 @@ export default function CourseEdit() {
       const data = await getDocument(path);
       console.log("data:", data);
       setCourse(data);
-
+      setLinks(data.link);
+      setDocuments(data.documents);
       setDescription(data.description);
       setTitle(data.title);
       setId(data.id);
+      setImg(data.imgURL);
     }
     loadData(`artSchool/${params.course}`);
   }, []);
-
-  console.log("course:", course);
 
   async function onUpdate(event) {
     event.preventDefault();
     const newCourse = {
       title: title,
       id: id,
-      imgURL: "",
+      imgURL: img,
       description: description,
+      link: links,
+      documents: collectedURL,
     };
 
-    const fileName = `course-${title}.jpg`;
-    const filePath = path + fileName;
-    const imgURL = await createFile(filePath, file);
+    for (let doc of documents) {
+      let documentName = doc.name;
+      let documentPath = `artSchool/${title}` + documentName;
+      if (doc === null) continue;
+      documentURL = await createFile(documentPath, doc);
+      collectedURL.push(documentURL);
+    }
 
-    if (file === null) {
+    if (img === "") {
       newCourse.imgURL = EmptyImg;
-    } else {
+    } else if (file !== null) {
+      const fileName = `course-${title}.jpg`;
+      const filePath = path + fileName;
+      const imgURL = await createFile(filePath, file);
       newCourse.imgURL = imgURL;
     }
 
     await updateDocument(path, course.id !== id ? course : newCourse);
     navigate(-1);
   }
+
+  async function onDeleteLink(event, link) {
+    event.preventDefault();
+    const newLinks = links.filter((el) => el !== link);
+    await updateDocument(path, { link: newLinks });
+    setLinks(newLinks);
+  }
+
+  async function onDeleteDocument(event, document) {
+    event.preventDefault();
+    const newDocuments = documents.filter((el) => el !== document);
+    await deleteFile(document);
+    await updateDocument(path, { documents: newDocuments });
+    setDocuments(newDocuments);
+  }
+
+  function createLink(event) {
+    event.preventDefault();
+    setLinks([...links, ""]);
+  }
+
+  function createDocuments(event) {
+    event.preventDefault();
+    setDocuments([...documents, null]);
+  }
+
+  const courseLink = links.map((link, index) => (
+    <div key={link}>
+      <ExternalLink href={link}> {index + 1}</ExternalLink>
+      <img
+        src={Xmark}
+        className="cource-edit-xmark"
+        onClick={(event) => onDeleteLink(event, link)}
+      />
+    </div>
+  ));
+
+  const courseDocuments = documents.map((doc, index) => (
+    <div key={doc}>
+      <ExternalLink href={doc}> {index + 1} </ExternalLink>
+      <img
+        src={Xmark}
+        className="cource-edit-xmark"
+        onClick={(event) => onDeleteDocument(event, doc)}
+      />
+    </div>
+  ));
 
   return (
     <div>
@@ -79,6 +143,55 @@ export default function CourseEdit() {
             onChange={(event) => setDescription(event.target.value)}
           />
         </div>
+
+        <button
+          onClick={(event) => createLink(event)}
+          className="courseCreate-button-small "
+        >
+          Add link
+        </button>
+        {links.map((item, index) => (
+          <input
+            type="text"
+            value={item}
+            onChange={(e) =>
+              setLinks(
+                links.map((el, i) => (i === index ? e.target.value : el))
+              )
+            }
+          />
+        ))}
+
+        <button
+          onClick={(event) => createDocuments(event)}
+          className="courseCreate-button-small "
+        >
+          Add document
+        </button>
+        {documents.map((doc, index) => (
+          <input
+            type="file"
+            key={index}
+            accept="application/pdf, application/doc, application/docx"
+            onChange={(event) => {
+              setDocuments(
+                documents.map((el, indexEl) =>
+                  indexEl === index ? event.target.files[0] : el
+                )
+              );
+            }}
+          />
+        ))}
+
+        <div>
+          <p>Links:</p>
+          {courseLink}
+        </div>
+        <div>
+          <p>Documents:</p>
+          {courseDocuments}
+        </div>
+
         <div className="course-edit-label">
           <div className="course-edit-label-block">
             <label className="course-edit-button" for="upload">
@@ -86,7 +199,11 @@ export default function CourseEdit() {
             </label>
             <button
               className="course-edit-button "
-              onClick={() => setFile(null)}
+              onClick={(e) => {
+                e.preventDefault();
+                setFile(null);
+                setImg(EmptyImg);
+              }}
             >
               Delete picture
             </button>
@@ -99,7 +216,7 @@ export default function CourseEdit() {
           />
 
           <img
-            src={file !== null ? URL.createObjectURL(file) : course.imgURL}
+            src={file !== null ? URL.createObjectURL(file) : img}
             className="course-edit-foto"
           />
         </div>

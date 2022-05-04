@@ -5,6 +5,7 @@ import { authentication } from "../scripts/firesbase";
 import { getDocument } from "../scripts/fireStore";
 import { useUID } from "../state/UIDProvider";
 import Logo from "../images/logo.svg";
+import { ExternalLink } from "react-external-link";
 
 export default function NavigationBar() {
   const { uid, setUID } = useUID();
@@ -48,6 +49,9 @@ export default function NavigationBar() {
             <p>Login</p>
           </Link>
         )}
+        <ExternalLink href="https://calendar.google.com/calendar/u/0/r?pli=1">
+          Google
+        </ExternalLink>
       </div>
     </div>
   );
