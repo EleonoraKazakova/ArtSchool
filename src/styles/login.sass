@@ -1,0 +1,52 @@
+@use './basic/button' as button
+@use './basic/buttonSmall' as button-small
+
+@mixin button
+@mixin button-small
+
+.login-grid
+  display: grid
+  grid-template-rows: auto 
+  grid-template-columns:  250px auto 250px
+  min-height: 100vh
+
+.login-content
+  display: flex
+  justify-content: flex-start
+  grid-column: 2 / 3
+  grid-row: 1 / 2
+  flex-direction: column
+  align-items: center
+  padding-top: 20px
+  gap: 40px
+
+input[type=email]
+  border-radius: 10px
+  height: 30px
+  width: 100%
+
+input[type=password]
+  border-radius: 10px
+  height: 30px
+  width: 100%
+
+.login-form
+  display: flex
+  justify-content: center
+  flex-direction: column
+  width: 80%
+  gap: 20px
+  
+.login-button
+  display: flex
+  justify-content: center
+
+.login-block
+  display: flex
+  justify-content: center
+  flex-direction: column
+  align-items: center
+  gap: 10px
+  border-top: 1px dotted #4e4545 
+  width: 80%
+  padding-top: 10px

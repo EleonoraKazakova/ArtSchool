@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
-import {
-  getDocument,
-  getCollection,
-  updateDocument,
-  deleteDocument,
-} from "../scripts/fireStore";
+import { getCollection, deleteDocument } from "../scripts/fireStore";
+import "../styles/studentsList.sass";
 
 export default function StudentsList() {
   const [students, setStudents] = useState([]);
@@ -17,8 +13,6 @@ export default function StudentsList() {
     loadData(path);
   }, []);
 
-  console.log("students:", students);
-
   async function onDelete(event, id) {
     event.preventDefault();
     await deleteDocument(`users/${id}`);
@@ -26,11 +20,26 @@ export default function StudentsList() {
     setStudents(newStudents);
   }
 
-  const studentsCard = students.map((item) => (
-    <div key={item.name}>
-      {item.name}
-      <button onClick={(event) => onDelete(event, item.id)}>Delete</button>
+  const studentsCard = students.map((item, index) => (
+    <div key={item.name} className="studentslist-block">
+      <p className="studentslist-name">
+        {index + 1}. {item.name}
+      </p>
+      <button
+        onClick={(event) => onDelete(event, item.id)}
+        className="button-small"
+      >
+        Delete
+      </button>
     </div>
   ));
-  return <div>{studentsCard}</div>;
+
+  return (
+    <div className="studentslist-grid">
+      <div className="studentslist-content">
+        <h2>Students</h2>
+        {studentsCard}
+      </div>
+    </div>
+  );
 }

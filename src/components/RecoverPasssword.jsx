@@ -16,13 +16,17 @@ export default function RecoverPassword() {
   }
 
   return (
-    <div>
-      <p>Please login to access to our platform.</p>
-      <form onSubmit={onRecover}>
-        <InputField setup={form.email} state={[email, setEmail]} />
+    <div className="login-grid">
+      <div className="login-content">
+        <h2>Please login to access to our platform.</h2>
+        <form onSubmit={onRecover} className="login-form">
+          <InputField setup={form.email} state={[email, setEmail]} />
 
-        <button>Recover password</button>
-      </form>
+          <div className="login-button">
+            <button className="button">Recover password</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

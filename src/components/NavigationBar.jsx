@@ -5,6 +5,7 @@ import { getDocument } from "../scripts/fireStore";
 import { useUID } from "../state/UIDProvider";
 import Logo from "../images/logo.svg";
 import { ExternalLink } from "react-external-link";
+import Google from "../images/google.png";
 
 export default function NavigationBar() {
   const { uid, setUID } = useUID();
@@ -59,10 +60,16 @@ export default function NavigationBar() {
           </>
         ) : null}
         <p className="navigationBar-user">{userName}</p>
-
-        <ExternalLink href="https://calendar.google.com/calendar/u/0/r?pli=1">
-          Google
-        </ExternalLink>
+        <div className="navigationBar-tooltip">
+          <ExternalLink href="https://calendar.google.com/calendar/u/0/r?pli=1">
+            <img
+              src={Google}
+              className="navigationBar-logo"
+              alt="Google calendar"
+            />
+          </ExternalLink>
+          <div className="navigationBar-tooltiptext">Calendar</div>
+        </div>
       </div>
     </div>
   );

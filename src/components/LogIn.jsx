@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../scripts/firebaseAuth";
 import { useUID } from "../state/UIDProvider";
+import "../styles/login.sass";
 
 export default function LogIn() {
   const navigate = useNavigate();
@@ -22,17 +23,29 @@ export default function LogIn() {
   }
 
   return (
-    <div>
-      <p>Please login to access to our platform.</p>
-      <form onSubmit={onLogin}>
-        <InputField setup={form.email} state={[email, setEmail]} />
-        <InputField setup={form.password} state={[password, setPassword]} />
-        <button>Submit</button>
-      </form>
-      <p>Haven't you regestered yet? Then click here.</p>
-      <Link to="/signup">Signup</Link>
-      <p>Did you forget your password? Then click here.</p>
-      <Link to="/recover-password">Recover password</Link>
+    <div className="login-grid">
+      <div className="login-content">
+        <h2>Please login to access to our platform.</h2>
+        <form onSubmit={onLogin} className="login-form">
+          <InputField setup={form.email} state={[email, setEmail]} />
+          <InputField setup={form.password} state={[password, setPassword]} />
+          <div className="login-button">
+            <button className="button-small">Submit</button>
+          </div>
+        </form>
+        <div className="login-block">
+          <p>Haven't you regestered yet? Then click here.</p>
+          <button className="button-small">
+            <Link to="/signup">Signup</Link>
+          </button>
+        </div>
+        <div className="login-block">
+          <p>Did you forget your password? Then click here.</p>
+          <button className="button">
+            <Link to="/recover-password">Recover password</Link>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

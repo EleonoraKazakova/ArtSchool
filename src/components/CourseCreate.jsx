@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { addDocument, getCollection } from "../scripts/fireStore";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createFile } from "../scripts/cloudStorage";
 import EmptyImg from "../images/empty.jpg";
 import "../styles/courseCreate.sass";
 import textToUrl from "../scripts/textToUrl";
 
 export default function CourseCreate() {
-  const params = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [courses, setCourses] = useState([]);
@@ -53,11 +52,10 @@ export default function CourseCreate() {
       let documentName = doc.name;
       let documentPath = `artSchool/${title}` + documentName;
       if (doc === null) continue;
-      console.log("doc:", doc);
+
       documentURL = await createFile(documentPath, doc);
       collectedURL.push(documentURL);
     }
-    console.log("collectedURL:", collectedURL);
 
     if (file === null) {
       newCourse.imgURL = EmptyImg;

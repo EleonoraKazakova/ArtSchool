@@ -1,0 +1,32 @@
+@use './basic/buttonSmall' as button-small
+
+
+@mixin button-small
+
+.studentslist-grid
+  display: grid
+  grid-template-rows: auto 
+  grid-template-columns:  250px auto 250px
+  min-height: 100vh
+
+.studentslist-content
+  display: flex
+  justify-content: flex-start
+  grid-column: 2 / 3
+  grid-row: 1 / 2
+  flex-direction: column
+  align-items: center
+  padding-top: 20px
+  gap: 40px
+
+.studentslist-block
+  display: flex
+  flex-direction: row
+  gap: 20px
+  border-bottom: 1px dotted #4e4545
+  padding-bottom: 5px
+  justify-content: space-between
+  width: 500px
+
+
+

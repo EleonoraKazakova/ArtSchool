@@ -5,6 +5,7 @@ import InputField from "./InputField";
 import form from "../data/signUpForm.json";
 import { useNavigate } from "react-router-dom";
 import { useUID } from "../state/UIDProvider";
+import "../styles/login.sass";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -32,14 +33,18 @@ export default function SignUp() {
   }
 
   return (
-    <div>
-      <h1>Create account</h1>
-      <form onSubmit={onCreate}>
-        <InputField setup={form.name} state={[name, setName]} />
-        <InputField setup={form.email} state={[email, setEmail]} />
-        <InputField setup={form.password} state={[password, setPassword]} />
-        <button>Submit</button>
-      </form>
+    <div className="login-grid">
+      <div className="login-content">
+        <h1>Create account</h1>
+        <form onSubmit={onCreate} className="login-form">
+          <InputField setup={form.name} state={[name, setName]} />
+          <InputField setup={form.email} state={[email, setEmail]} />
+          <InputField setup={form.password} state={[password, setPassword]} />
+          <div className="login-button">
+            <button className="button-small">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

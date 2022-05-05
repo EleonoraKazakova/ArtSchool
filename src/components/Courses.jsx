@@ -51,14 +51,16 @@ export default function Courses() {
   ));
 
   return (
-    <div>
-      <h2>Our courses</h2>
+    <div className="courses-for-teacher-content">
+      <h2 className="courses-for-teacher-title">Our courses</h2>
       <div className="courses-for-teacher-block">
         {artCourseCard}
-        <button className="courses-for-teacher-empty">
-          <img src={Plus} className="courses-for-teacher-icon" />
-          <Link to="/course-create">Add</Link>
-        </button>
+        <Link to="/course-create">
+          <button className="courses-for-teacher-empty">
+            <img src={Plus} className="courses-for-teacher-icon" />
+            Add new course
+          </button>
+        </Link>
       </div>
     </div>
   );
