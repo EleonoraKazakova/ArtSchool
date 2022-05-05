@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { createFile } from "../scripts/cloudStorage";
 import EmptyImg from "../images/empty.jpg";
 import "../styles/courseCreate.sass";
+import textToUrl from "../scripts/textToUrl";
 
 export default function CourseCreate() {
   const params = useParams();
@@ -34,7 +35,7 @@ export default function CourseCreate() {
 
   async function onCreate(event) {
     event.preventDefault();
-    const id = title.toLowerCase();
+    const id = textToUrl(title);
     const newCourse = {
       title: title,
       id: id,
@@ -81,7 +82,6 @@ export default function CourseCreate() {
     setDocuments([...documents, null]);
   }
 
-  console.log("documents:", documents);
   return (
     <div className="courseCreate-content">
       <h1>Create course</h1>

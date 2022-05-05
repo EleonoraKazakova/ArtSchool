@@ -1,0 +1,25 @@
+{
+  "artists": [
+    {
+      "id": 0,
+      "name": "Vincent Willem van Gogh",
+      "text": "Van Gogh was born into an upper-middle-class family, While a child he drew and was serious, quiet and thoughtful. As a young man he worked as an art dealer, often traveling, but became depressed after he was transferred to London. He turned to religion and spent time as a Protestant missionary in southern Belgium. He drifted in ill health and solitude before taking up painting in 1881, having moved back home with his parents.",
+      "img": "vangog.jpg",
+      "alt": "Portret of Vincent Willem van Gogh"
+    },
+    {
+      "id": 1,
+      "name": "Raffaello Sanzio da Urbino",
+      "text": "Raphael was enormously productive, running an unusually large workshop and, despite his early death at 37, leaving a large body of work. His career falls naturally into three phases and three styles, first described by Giorgio Vasari: his early years in Umbria, then a period of about four years (1504–1508) absorbing the artistic traditions of Florence, followed by his last hectic and triumphant twelve years in Rome, working for two popes and their close associates.[6]",
+      "img": "rafael.jpg",
+      "alt": "A man in a red beret"
+    },
+    {
+      "id": 2,
+      "name": "Rembrandt Harmenszoon van Rijn",
+      "text": "He was the ninth child born to Harmen Gerritszoon van Rijn and Neeltgen Willemsdochter van Zuijtbrouck.[11] His family was quite well-to-do; his father was a miller and his mother was a baker's daughter. Religion is a central theme in Rembrandt's works and the religiously fraught period in which he lived makes his faith a matter of interest. His mother was Catholic, and his father       belonged to the Dutch Reformed Church.",
+      "img": "rembrant.jpg",
+      "alt": "A man in a black beret"
+    }
+  ]
+}

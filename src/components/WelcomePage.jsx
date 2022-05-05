@@ -1,21 +1,31 @@
 import { Link } from "react-router-dom";
 import "../styles/welcomePage.sass";
-import Welcome from "../images/welcome.jpg";
+import ArtistsData from "../data/artistsData.json";
 
 export default function WelcomePage() {
-  /*<img
-        src={require(`../pictures/homePage/${dish.dishImg}.jpg`)}
-        className="homepage-image"
-        alt={dish.altImg}
-      />*/
+  const artists = ArtistsData.artists.map((artist, index) => (
+    <div key={artist.name} className="welcompage-block">
+      <img
+        src={require(`../images/${artist.img}`)}
+        className="welcompage-img"
+        alt={artist.alt}
+      />
+      <div className="welcompage-block-text">
+        <h3>{artist.name}</h3>
+        <p>{artist.text}</p>
+      </div>
+    </div>
+  ));
+
   return (
     <div>
       <div className="welcompage-big-img ">
-        <h1>Welcome</h1>
+        <h1 className="welcompage-title">Start studing art!</h1>
       </div>
-      <p>
+      <h2 className="welcompage-content">
         Here you will find a lot of information abourt artist of different eras
-      </p>
+      </h2>
+      <div className="welcompage-content">{artists}</div>
     </div>
   );
 }

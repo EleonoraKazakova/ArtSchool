@@ -27,29 +27,35 @@ export default function Course() {
 
   const coursLink = links.map((link, index) => (
     <ExternalLink href={link} key={link}>
-      {index + 1}
+      Link {index + 1}
     </ExternalLink>
   ));
   const coursDocuments = documents.map((doc, index) => (
     <ExternalLink href={doc} key={doc}>
-      {index + 1}
+      Document {index + 1}
     </ExternalLink>
   ));
 
   return (
     <div className="course-content">
-      <h2>{course.title}</h2>
-      <img src={image} />
-      <p>{course.description}</p>
-      <div>
-        <p>Links:</p>
-        {coursLink}
+      <h2 className="cource-title">{course.title}</h2>
+      <div className="course-block">
+        <img src={image} className="course-img" />
+        <div className="course-block-right">
+          <p className="course-text">{course.description}</p>
+          <div>
+            <p className="course-link">Links:</p>
+            {coursLink}
+          </div>
+          <div>
+            <p className="course-link">Documents:</p>
+            {coursDocuments}
+          </div>
+        </div>
       </div>
-      <div>
-        <p>Documents:</p>
-        {coursDocuments}
-      </div>
-      <button onClick={() => navigate(-1)}>Go back</button>
+      <button onClick={() => navigate(-1)} className="course-button">
+        Go back
+      </button>
     </div>
   );
 }

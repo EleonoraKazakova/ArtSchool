@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/navigationBar.sass";
 import { Link } from "react-router-dom";
-import { authentication } from "../scripts/firesbase";
 import { getDocument } from "../scripts/fireStore";
 import { useUID } from "../state/UIDProvider";
 import Logo from "../images/logo.svg";
@@ -22,6 +21,7 @@ export default function NavigationBar() {
     }
   }, [uid]);
 
+  console.log("uid:", uid);
   const userName = uid !== null ? <p>{user.name}</p> : null;
 
   return (
@@ -33,22 +33,33 @@ export default function NavigationBar() {
         ArtSchool
       </div>
       <div className="navigationBar-right-block">
-        <Link to="/">
-          <p>Courses</p>
-        </Link>
-        {uid !== null && user.type === "teacher" ? (
-          <Link to="/students-list">
-            <p>Students</p>
-          </Link>
-        ) : null}
-        <p className="navigationBar-user">{userName}</p>
-        {uid !== null ? (
-          <p onClick={() => setUID(null)}>Logout</p>
-        ) : (
+        {uid === null ? (
           <Link to="/login">
             <p>Login</p>
           </Link>
-        )}
+        ) : null}
+        {uid !== null && user.type === "teacher" ? (
+          <>
+            <Link to="/">
+              <p>Courses</p>
+            </Link>
+            <Link to="/students-list">
+              <p>Students</p>
+            </Link>
+            <p onClick={() => setUID(null)}>Logout</p>
+          </>
+        ) : null}
+        {uid !== null && user.type === "student" ? (
+          <>
+            <Link to="/">
+              <p>Courses</p>
+            </Link>
+
+            <p onClick={() => setUID(null)}>Logout</p>
+          </>
+        ) : null}
+        <p className="navigationBar-user">{userName}</p>
+
         <ExternalLink href="https://calendar.google.com/calendar/u/0/r?pli=1">
           Google
         </ExternalLink>

@@ -30,7 +30,6 @@ export default function Courses() {
     <div key={item.id} className="courses-for-teacher-card">
       <img src={item.imgURL} className="courses-for-teacher-img" />
       <Link to={`/courses/${item.id}`}>{item.title} </Link>
-      {item.description}
 
       <div className="courses-for-teacher-edit">
         <Link to={`/courses/${item.id}/edit`}>
