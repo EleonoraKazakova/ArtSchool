@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "../styles/welcomePage.sass";
 import ArtistsData from "../data/artistsData.json";
 

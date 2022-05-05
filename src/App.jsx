@@ -1,5 +1,4 @@
 import "./App.sass";
-import { useState } from "react";
 import LoggedRoutes from "./routs/LoggedRoutes";
 import UnLoggedRoutes from "./routs/UnLoggedRoutes";
 import { BrowserRouter } from "react-router-dom";

@@ -1,16 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import HomePage from "../components/HomePage";
-import LogIn from "../components/LogIn";
-import SignUp from "../components/SignUp";
+import LogIn from "../components/authentication/LogIn";
+import SignUp from "../components/authentication/SignUp";
 import { authentication } from "../scripts/firesbase";
 import { getDocument } from "../scripts/fireStore";
 import { useState, useEffect } from "react";
-import Courses from "../components/Courses";
+import CoursesTeacher from "../components/CoursesTeacher";
 import Course from "../components/Course";
 import CourseEdit from "../components/CourseEdit";
 import CourseCreate from "../components/CourseCreate";
 import StudentsList from "../components/StudentsList";
-import CoursesForStudents from "../components/CoursesForStudents";
+import CoursesStudents from "../components/CoursesStudents";
 import "../styles/lougedRoutes.sass";
 
 export default function LoggedRoutes() {
@@ -35,15 +34,18 @@ export default function LoggedRoutes() {
           <Route
             path="/"
             element={
-              user.type === "teacher" ? <Courses /> : <CoursesForStudents />
+              user.type === "teacher" ? <CoursesTeacher /> : <CoursesStudents />
             }
           />
-          <Route path="/:courses/:course" element={<Course />} />
-          <Route path="/:courses/:course/edit" element={<CourseEdit />} />
+          <Route path="/:CoursesTeacher/:course" element={<Course />} />
+          <Route
+            path="/:CoursesTeacher/:course/edit"
+            element={<CourseEdit />}
+          />
           <Route path="/course-create" element={<CourseCreate />} />
           <Route path="/students-list" element={<StudentsList />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/homepage" element={<HomePage />} />
+
           <Route path="/login" element={<LogIn />} />
         </Routes>
       </div>

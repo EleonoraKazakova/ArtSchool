@@ -9,7 +9,7 @@ import textToUrl from "../scripts/textToUrl";
 export default function CourseCreate() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [courses, setCourses] = useState([]);
+  const [CoursesTeacher, setCoursesTeacher] = useState([]);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [link, setLink] = useState([]);
@@ -21,7 +21,7 @@ export default function CourseCreate() {
     const path = `artSchool`;
     async function loadData(path) {
       const data = await getCollection(path);
-      setCourses(data);
+      setCoursesTeacher(data);
     }
     loadData(path);
   }, []);

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { createUser } from "../scripts/firebaseAuth";
-import { addDocumentWithId } from "../scripts/fireStore";
-import InputField from "./InputField";
-import form from "../data/signUpForm.json";
+import { createUser } from "../../scripts/firebaseAuth";
+import { addDocumentWithId } from "../../scripts/fireStore";
+import InputField from "../InputField";
+import form from "../../data/signUpForm.json";
 import { useNavigate } from "react-router-dom";
-import { useUID } from "../state/UIDProvider";
-import "../styles/login.sass";
+import { useUID } from "../../state/UIDProvider";
+import "../../styles/login.sass";
 
 export default function SignUp() {
   const navigate = useNavigate();

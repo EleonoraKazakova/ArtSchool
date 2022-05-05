@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import LogIn from "../components/LogIn";
+import LogIn from "../components/authentication/LogIn";
 import WelcomePage from "../components/WelcomePage";
-import RecoverPassword from "../components/RecoverPasssword";
-import SignUp from "../components/SignUp";
+import RecoverPassword from "../components/authentication/RecoverPasssword";
+import SignUp from "../components/authentication/SignUp";
 
 export default function UnLoggedRoutes() {
   return (

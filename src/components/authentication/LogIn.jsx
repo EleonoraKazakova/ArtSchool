@@ -1,10 +1,10 @@
-import InputField from "./InputField";
-import form from "../data/logInForm.json";
+import InputField from "../InputField";
+import form from "../../data/logInForm.json";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import { loginUser } from "../scripts/firebaseAuth";
-import { useUID } from "../state/UIDProvider";
-import "../styles/login.sass";
+import { loginUser } from "../../scripts/firebaseAuth";
+import { useUID } from "../../state/UIDProvider";
+import "../../styles/login.sass";
 
 export default function LogIn() {
   const navigate = useNavigate();

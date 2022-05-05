@@ -42,7 +42,7 @@ export default function NavigationBar() {
         {uid !== null && user.type === "teacher" ? (
           <>
             <Link to="/">
-              <p>Courses</p>
+              <p>CoursesTeacher</p>
             </Link>
             <Link to="/students-list">
               <p>Students</p>
@@ -53,7 +53,7 @@ export default function NavigationBar() {
         {uid !== null && user.type === "student" ? (
           <>
             <Link to="/">
-              <p>Courses</p>
+              <p>CoursesTeacher</p>
             </Link>
 
             <p onClick={() => setUID(null)}>Logout</p>

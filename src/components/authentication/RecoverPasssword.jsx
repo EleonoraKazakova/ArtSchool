@@ -1,8 +1,8 @@
-import InputField from "./InputField";
-import form from "../data/recoverPasswordForm.json";
+import InputField from "../InputField";
+import form from "../../data/recoverPasswordForm.json";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { recoverUser } from "../scripts/firebaseAuth";
+import { recoverUser } from "../../scripts/firebaseAuth";
 
 export default function RecoverPassword() {
   const navigate = useNavigate();
