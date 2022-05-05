@@ -9,80 +9,62 @@ import Xmark from "../images/xmark.svg";
 
 export default function CourseEdit() {
   const params = useParams();
-  console.log("params:", params);
   const navigate = useNavigate();
 
-  const [course, setCourse] = useState({});
-  const [title, setTitle] = useState("");
-  const [id, setId] = useState("");
+  const [course, setCourse] = useState(null);
   const [file, setFile] = useState(null);
-  const [img, setImg] = useState(EmptyImg);
-  const [description, setDescription] = useState("");
-  const [links, setLinks] = useState([]);
   const [documents, setDocuments] = useState([]);
-
-  let collectedURL = [];
-  let documentURL;
 
   const path = `artSchool/${params.course}`;
 
   useEffect(() => {
     async function loadData(path) {
       const data = await getDocument(path);
-      console.log("data:", data);
       setCourse(data);
-      setLinks(data.link);
-      setDocuments(data.documents);
-      setDescription(data.description);
-      setTitle(data.title);
-      setId(data.id);
-      setImg(data.imgURL);
     }
     loadData(`artSchool/${params.course}`);
   }, []);
 
+  if (course === null) return null;
   async function onUpdate(event) {
     event.preventDefault();
-    const newCourse = {
-      title: title,
-      id: id,
-      imgURL: img,
-      description: description,
-      link: links,
-      documents: collectedURL,
-    };
+
+    let collectedURL = [];
 
     for (let doc of documents) {
-      let documentName = doc.name;
-      let documentPath = `artSchool/${title}` + documentName;
       if (doc === null) continue;
-      documentURL = await createFile(documentPath, doc);
+      let documentName = doc.name;
+      let documentPath = `artSchool/${course.title}` + documentName;
+      let documentURL = await createFile(documentPath, doc);
       collectedURL.push(documentURL);
     }
 
-    if (img === "") {
-      newCourse.imgURL = EmptyImg;
+    if (course.imgURL === "") {
+      course.imgURL = EmptyImg;
     } else if (file !== null) {
-      const fileName = `course-${title}.jpg`;
+      const fileName = `course-${course.title}.jpg`;
       const filePath = path + fileName;
       const imgURL = await createFile(filePath, file);
-      newCourse.imgURL = imgURL;
+      course.imgURL = imgURL;
     }
 
-    await updateDocument(path, course.id !== id ? course : newCourse);
+    await updateDocument(path, {
+      ...course,
+      documents: [...course.documents, ...collectedURL],
+    });
     navigate(-1);
   }
 
   async function onDeleteLink(event, link) {
     event.preventDefault();
-    const newLinks = links.filter((el) => el !== link);
+    const newLinks = course.link.filter((el) => el !== link);
     await updateDocument(path, { link: newLinks });
-    setLinks(newLinks);
+    setCourse({ ...course, link: newLinks });
   }
 
   async function onDeleteDocument(event, document) {
     event.preventDefault();
-    const newDocuments = documents.filter((el) => el !== document);
+    const newDocuments = course.documents.filter((el) => el !== document);
     await deleteFile(document);
     await updateDocument(path, { documents: newDocuments });
     setDocuments(newDocuments);
@@ -90,7 +72,7 @@ export default function CourseEdit() {
 
   function createLink(event) {
     event.preventDefault();
-    setLinks([...links, ""]);
+    setCourse({ ...course, link: [...course.link, ""] });
   }
 
   function createDocuments(event) {
@@ -98,18 +80,7 @@ export default function CourseEdit() {
     setDocuments([...documents, null]);
   }
 
-  const courseLink = links.map((link, index) => (
-    <div key={link}>
-      <ExternalLink href={link}> {index + 1}</ExternalLink>
-      <img
-        src={Xmark}
-        className="cource-edit-xmark"
-        onClick={(event) => onDeleteLink(event, link)}
-      />
-    </div>
-  ));
-
-  const courseDocuments = documents.map((doc, index) => (
+  const courseDocuments = course.documents.map((doc, index) => (
     <div key={doc}>
       <ExternalLink href={doc}> {index + 1} </ExternalLink>
       <img
@@ -122,7 +93,7 @@ export default function CourseEdit() {
 
   return (
     <div>
-      <h2>Edit course {title}</h2>
+      <h2>Edit course {course.title}</h2>
       <form onSubmit={onUpdate} className="admin-form">
         <div>
           <label>Title</label>
@@ -130,8 +101,10 @@ export default function CourseEdit() {
             placeholder="Title"
             required
             type="text"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            value={course.title}
+            onChange={(event) =>
+              setCourse({ ...course, title: event.target.value })
+            }
           />
         </div>
         <div>
@@ -139,29 +112,46 @@ export default function CourseEdit() {
           <input
             placeholder="description"
             type="text"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
+            value={course.description}
+            onChange={(event) =>
+              setCourse({ ...course, description: event.target.value })
+            }
           />
         </div>
 
+        <p>Links:</p>
+        {course.link.map((item, index) => (
+          <>
+            <input
+              type="text"
+              value={item}
+              onChange={(e) =>
+                setCourse({
+                  ...course,
+                  link: course.link.map((el, i) =>
+                    i === index ? e.target.value : el
+                  ),
+                })
+              }
+            />
+            <img
+              src={Xmark}
+              className="cource-edit-xmark"
+              onClick={(event) => onDeleteLink(event, item)}
+            />
+          </>
+        ))}
         <button
           onClick={(event) => createLink(event)}
           className="courseCreate-button-small "
         >
           Add link
         </button>
-        {links.map((item, index) => (
-          <input
-            type="text"
-            value={item}
-            onChange={(e) =>
-              setLinks(
-                links.map((el, i) => (i === index ? e.target.value : el))
-              )
-            }
-          />
-        ))}
 
+        <div>
+          <p>Documents:</p>
+          {courseDocuments}
+        </div>
         <button
           onClick={(event) => createDocuments(event)}
           className="courseCreate-button-small "
@@ -183,15 +173,6 @@ export default function CourseEdit() {
           />
         ))}
 
-        <div>
-          <p>Links:</p>
-          {courseLink}
-        </div>
-        <div>
-          <p>Documents:</p>
-          {courseDocuments}
-        </div>
-
         <div className="course-edit-label">
           <div className="course-edit-label-block">
             <label className="course-edit-button" for="upload">
@@ -202,7 +183,7 @@ export default function CourseEdit() {
               onClick={(e) => {
                 e.preventDefault();
                 setFile(null);
-                setImg(EmptyImg);
+                setCourse({ ...course, imgURL: EmptyImg });
               }}
             >
               Delete picture
@@ -216,7 +197,7 @@ export default function CourseEdit() {
           />
 
           <img
-            src={file !== null ? URL.createObjectURL(file) : img}
+            src={file !== null ? URL.createObjectURL(file) : course.imgURL}
             className="course-edit-foto"
           />
         </div>
