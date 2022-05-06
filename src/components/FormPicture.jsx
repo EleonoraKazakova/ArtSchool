@@ -7,7 +7,10 @@ export default function FormPicture({ state }) {
   return (
     <div>
       <div className="courseCreate-buttons-block">
-        <label className="courseCreate-button-small" for="formPicture-upload">
+        <label
+          className="courseCreate-button-small"
+          htmlFor="formPicture-upload"
+        >
           Choose image
         </label>
         <button

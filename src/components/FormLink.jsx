@@ -9,7 +9,6 @@ export default function FormLink({ state }) {
   }
 
   function onDeleteLink(event, currentLink) {
-    console.log("currentLink:", currentLink);
     event.preventDefault();
     const newLinks = link.filter((el) => el !== currentLink);
     setLink(newLinks);
