@@ -114,7 +114,7 @@ export default function CourseEdit() {
 
         <div className="course-edit-label">
           <div className="course-edit-label-block">
-            <label className="course-edit-button" for="upload">
+            <label className="course-edit-button" htmlFor="upload">
               Choose picture
             </label>
             <button

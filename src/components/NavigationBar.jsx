@@ -61,7 +61,7 @@ export default function NavigationBar() {
           </>
         ) : null}
 
-        <p className="navigationBar-user">{userName}</p>
+        <div className="navigationBar-user">{userName}</div>
 
         <div className="navigationBar-tooltip">
           <ExternalLink href="https://calendar.google.com/calendar/u/0/r?pli=1">
