@@ -1,11 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createFile, deleteFile } from "../scripts/cloudStorage";
+import { createFile } from "../scripts/cloudStorage";
 import { getDocument, updateDocument } from "../scripts/fireStore";
 import EmptyImg from "../images/empty.jpg";
 import "../styles/courseEdit.sass";
 import { ExternalLink } from "react-external-link";
 import Xmark from "../images/xmark.svg";
+import uploadFiles from "../scripts/uploadFile";
+import FormDocuments from "./FormDocuments";
+import FormLink from "./FormLink";
 
 export default function CourseEdit() {
   const params = useParams();
@@ -14,6 +17,7 @@ export default function CourseEdit() {
   const [course, setCourse] = useState(null);
   const [file, setFile] = useState(null);
   const [documents, setDocuments] = useState([]);
+  const [link, setLink] = useState([]);
 
   const path = `artSchool/${params.course}`;
 
@@ -21,6 +25,7 @@ export default function CourseEdit() {
     async function loadData(path) {
       const data = await getDocument(path);
       setCourse(data);
+      setLink(data.link);
     }
     loadData(`artSchool/${params.course}`);
   }, []);
@@ -30,55 +35,31 @@ export default function CourseEdit() {
   async function onUpdate(event) {
     event.preventDefault();
 
-    let collectedURL = [];
-
-    for (let doc of documents) {
-      if (doc === null) continue;
-      let documentName = doc.name;
-      let documentPath = `artSchool/${course.title}` + documentName;
-      let documentURL = await createFile(documentPath, doc);
-      collectedURL.push(documentURL);
-    }
+    const collectedURL = await uploadFiles(documents, course.title);
 
     if (course.imgURL === "") {
       course.imgURL = EmptyImg;
     } else if (file !== null) {
-      const fileName = `course-${course.title}.jpg`;
-      const filePath = path + fileName;
-      const imgURL = await createFile(filePath, file);
+      const imgURL = await createFile(
+        `course-${course.title}/${file.name}`,
+        file
+      );
       course.imgURL = imgURL;
     }
 
     await updateDocument(path, {
       ...course,
+      link: link,
       documents: [...course.documents, ...collectedURL],
     });
     navigate(-1);
   }
 
-  async function onDeleteLink(event, link) {
-    event.preventDefault();
-    const newLinks = course.link.filter((el) => el !== link);
-    await updateDocument(path, { link: newLinks });
-    setCourse({ ...course, link: newLinks });
-  }
-
   async function onDeleteDocument(event, document) {
     event.preventDefault();
     const newDocuments = course.documents.filter((el) => el !== document);
-    await deleteFile(document);
-    await updateDocument(path, { documents: newDocuments });
-    setDocuments(newDocuments);
-  }
 
-  function createLink(event) {
-    event.preventDefault();
-    setCourse({ ...course, link: [...course.link, ""] });
-  }
-
-  function createDocuments(event) {
-    event.preventDefault();
-    setDocuments([...documents, null]);
+    setCourse({ ...course, documents: newDocuments });
   }
 
   const courseDocuments = course.documents.map((doc, index) => (
@@ -121,58 +102,15 @@ export default function CourseEdit() {
         </div>
 
         <p>Links:</p>
-        {course.link.map((item, index) => (
-          <div className="course-edit-label-block">
-            <input
-              type="text"
-              value={item}
-              onChange={(e) =>
-                setCourse({
-                  ...course,
-                  link: course.link.map((el, i) =>
-                    i === index ? e.target.value : el
-                  ),
-                })
-              }
-            />
-            <img
-              src={Xmark}
-              className="cource-edit-xmark"
-              onClick={(event) => onDeleteLink(event, item)}
-            />
-          </div>
-        ))}
-        <button
-          onClick={(event) => createLink(event)}
-          className="courseCreate-button-small "
-        >
-          Add link
-        </button>
+
+        <FormLink state={[link, setLink]} />
 
         <div>
           <p>Documents:</p>
           {courseDocuments}
         </div>
-        <button
-          onClick={(event) => createDocuments(event)}
-          className="courseCreate-button-small "
-        >
-          Add document
-        </button>
-        {documents.map((doc, index) => (
-          <input
-            type="file"
-            key={index}
-            accept="application/pdf, application/doc, application/docx"
-            onChange={(event) => {
-              setDocuments(
-                documents.map((el, indexEl) =>
-                  indexEl === index ? event.target.files[0] : el
-                )
-              );
-            }}
-          />
-        ))}
+
+        <FormDocuments state={[documents, setDocuments]} />
 
         <div className="course-edit-label">
           <div className="course-edit-label-block">
@@ -180,7 +118,7 @@ export default function CourseEdit() {
               Choose picture
             </label>
             <button
-              className="course-edit-button "
+              className="course-edit-button"
               onClick={(e) => {
                 e.preventDefault();
                 setFile(null);
