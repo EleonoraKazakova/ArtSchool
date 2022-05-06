@@ -1,5 +1,5 @@
 export default function InputField({ setup, state }) {
-  const { label, placeholder, type } = setup;
+  const { label, placeholder, type, required } = setup;
   const [value, setValue] = state;
   return (
     <label>
@@ -7,6 +7,7 @@ export default function InputField({ setup, state }) {
       <input
         placeholder={placeholder}
         value={value}
+        required={required}
         type={type}
         onChange={(event) => setValue(event.target.value)}
       />

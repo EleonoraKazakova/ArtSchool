@@ -1,30 +1,24 @@
-import { useState, useEffect } from "react";
-import { addDocument, getCollection } from "../scripts/fireStore";
+import { useState } from "react";
+import { addDocument } from "../scripts/fireStore";
 import { useNavigate } from "react-router-dom";
 import { createFile } from "../scripts/cloudStorage";
 import EmptyImg from "../images/empty.jpg";
 import "../styles/courseCreate.sass";
 import textToUrl from "../scripts/textToUrl";
+import uploadFiles from "../scripts/uploadFile";
+import InputField from "./InputField";
+import createForm from "../data/createForm.json";
+import FormDocuments from "./FormDocuments";
+import FormLink from "./FormLink";
+import FormPicture from "./FormPicture";
 
 export default function CourseCreate() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [course, setCourse] = useState([]);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [link, setLink] = useState([]);
   const [documents, setDocuments] = useState([]);
-  let collectedURL = [];
-  let documentURL;
-
-  useEffect(() => {
-    const path = `artSchool`;
-    async function loadData(path) {
-      const data = await getCollection(path);
-      setCourse(data);
-    }
-    loadData(path);
-  }, []);
 
   function clearForm() {
     setTitle("");
@@ -35,6 +29,8 @@ export default function CourseCreate() {
   async function onCreate(event) {
     event.preventDefault();
     const id = textToUrl(title);
+    const collectedURL = await uploadFiles(documents, title);
+
     const newCourse = {
       title: title,
       id: id,
@@ -44,22 +40,10 @@ export default function CourseCreate() {
       documents: collectedURL,
     };
 
-    const fileName = `course-${title}.jpg`;
-    const filePath = "artSchool/" + fileName;
-    const imgURL = await createFile(filePath, file);
-
-    for (let doc of documents) {
-      let documentName = doc.name;
-      let documentPath = `artSchool/${title}` + documentName;
-      if (doc === null) continue;
-
-      documentURL = await createFile(documentPath, doc);
-      collectedURL.push(documentURL);
-    }
-
     if (file === null) {
       newCourse.imgURL = EmptyImg;
     } else {
+      const imgURL = await createFile(`artSchool/${file.name}`, file);
       newCourse.imgURL = imgURL;
     }
 
@@ -70,109 +54,20 @@ export default function CourseCreate() {
     navigate(-1);
   }
 
-  function createLink(event) {
-    event.preventDefault();
-    setLink([...link, ""]);
-  }
-
-  function createDocuments(event) {
-    event.preventDefault();
-    setDocuments([...documents, null]);
-  }
-
   return (
     <div className="courseCreate-content">
       <h1>Create course</h1>
       <form onSubmit={onCreate} className="courseCreate-form">
-        <div>
-          <label>Title</label>
-          <input
-            placeholder="title"
-            required
-            type="text"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-        </div>
-        <div>
-          <label>Description</label>
-          <input
-            placeholder="description"
-            type="text"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-          />
-        </div>
+        <InputField setup={createForm.title} state={[title, setTitle]} />
+        <InputField
+          setup={createForm.description}
+          state={[description, setDescription]}
+        />
 
-        <button
-          onClick={(event) => createLink(event)}
-          className="courseCreate-button-small "
-        >
-          Add link
-        </button>
-        {link.map((item, index) => (
-          <input
-            type="text"
-            value={item}
-            onChange={(event) =>
-              setLink(
-                link.map((el, indexEl) =>
-                  indexEl === index ? event.target.value : el
-                )
-              )
-            }
-          />
-        ))}
+        <FormLink state={[link, setLink]} />
+        <FormDocuments state={[documents, setDocuments]} />
+        <FormPicture state={[file, setFile]} />
 
-        <button
-          onClick={(event) => createDocuments(event)}
-          className="courseCreate-button-small"
-          for="uploadDoc"
-        >
-          Add document
-        </button>
-        <div>
-          {documents.map((doc, index) => (
-            <input
-              className="courseCreate-documents"
-              type="file"
-              //key={index}
-              id="uploadDoc"
-              accept="application/pdf, application/doc, application/docx"
-              onChange={(event) => {
-                setDocuments(
-                  documents.map((el, indexEl) =>
-                    indexEl === index ? event.target.files[0] : el
-                  )
-                );
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="admin-label">
-          <div className="courseCreate-buttons-block">
-            <label className="courseCreate-button-small " for="upload">
-              Choose image
-            </label>
-            <button
-              className="courseCreate-button-small "
-              onClick={() => setFile(null)}
-            >
-              Delete picture
-            </button>
-          </div>
-          <img
-            src={file !== null ? URL.createObjectURL(file) : EmptyImg}
-            className="courseCreate-img"
-          />
-          <input
-            type="file"
-            id="upload"
-            accept="image/png, image/jpeg"
-            onChange={(event) => setFile(event.target.files[0])}
-          />
-        </div>
         <div className="courseCreate-title">
           <button className="courseCreate-button">Add course</button>
         </div>

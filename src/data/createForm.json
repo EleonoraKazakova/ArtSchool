@@ -1,0 +1,14 @@
+{
+  "title": {
+    "label": "Title",
+    "placeholder": "Vincent van Gogh",
+    "type": "text",
+    "required": true
+  },
+  "description": {
+    "label": "Description",
+    "placeholder": "This course is about...",
+    "type": "text",
+    "required": false
+  }
+}
