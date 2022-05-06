@@ -30,7 +30,7 @@ export default function CourseCreate() {
     event.preventDefault();
     const id = textToUrl(title);
     const collectedURL = await uploadFiles(documents, title);
-
+    console.log("id:", id);
     const newCourse = {
       title: title,
       id: id,
