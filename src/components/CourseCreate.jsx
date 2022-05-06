@@ -9,7 +9,7 @@ import textToUrl from "../scripts/textToUrl";
 export default function CourseCreate() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [CoursesTeacher, setCoursesTeacher] = useState([]);
+  const [course, setCourse] = useState([]);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [link, setLink] = useState([]);
@@ -21,7 +21,7 @@ export default function CourseCreate() {
     const path = `artSchool`;
     async function loadData(path) {
       const data = await getCollection(path);
-      setCoursesTeacher(data);
+      setCourse(data);
     }
     loadData(path);
   }, []);
@@ -62,7 +62,7 @@ export default function CourseCreate() {
     } else {
       newCourse.imgURL = imgURL;
     }
-    console.log("documents:", documents);
+
     if (newCourse.title === "") return;
     await addDocument(`artSchool/${id}`, newCourse);
 
@@ -126,25 +126,29 @@ export default function CourseCreate() {
 
         <button
           onClick={(event) => createDocuments(event)}
-          className="courseCreate-button-small "
+          className="courseCreate-button-small"
+          for="uploadDoc"
         >
           Add document
         </button>
-        {documents.map((doc, index) => (
-          <input
-            type="file"
-            key={index}
-            accept="application/pdf, application/doc, application/docx"
-            onChange={(event) => {
-              console.log("event:", event);
-              setDocuments(
-                documents.map((el, indexEl) =>
-                  indexEl === index ? event.target.files[0] : el
-                )
-              );
-            }}
-          />
-        ))}
+        <div>
+          {documents.map((doc, index) => (
+            <input
+              className="courseCreate-documents"
+              type="file"
+              //key={index}
+              id="uploadDoc"
+              accept="application/pdf, application/doc, application/docx"
+              onChange={(event) => {
+                setDocuments(
+                  documents.map((el, indexEl) =>
+                    indexEl === index ? event.target.files[0] : el
+                  )
+                );
+              }}
+            />
+          ))}
+        </div>
 
         <div className="admin-label">
           <div className="courseCreate-buttons-block">
@@ -169,7 +173,9 @@ export default function CourseCreate() {
             onChange={(event) => setFile(event.target.files[0])}
           />
         </div>
-        <button className="courseCreate-button">Add course</button>
+        <div className="courseCreate-title">
+          <button className="courseCreate-button">Add course</button>
+        </div>
       </form>
 
       <button className="courseCreate-button" onClick={() => navigate(-1)}>

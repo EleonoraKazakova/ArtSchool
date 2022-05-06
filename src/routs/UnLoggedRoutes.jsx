@@ -6,7 +6,7 @@ import SignUp from "../components/authentication/SignUp";
 
 export default function UnLoggedRoutes() {
   return (
-    <>
+    <section>
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/login" element={<LogIn />} />
@@ -14,6 +14,6 @@ export default function UnLoggedRoutes() {
         <Route path="/recover-password" element={<RecoverPassword />} />
         <Route path="*" element={<WelcomePage />} />
       </Routes>
-    </>
+    </section>
   );
 }

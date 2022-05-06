@@ -26,6 +26,7 @@ export default function CourseEdit() {
   }, []);
 
   if (course === null) return null;
+
   async function onUpdate(event) {
     event.preventDefault();
 
@@ -93,8 +94,8 @@ export default function CourseEdit() {
 
   return (
     <div>
-      <h2>Edit course {course.title}</h2>
-      <form onSubmit={onUpdate} className="admin-form">
+      <h2 className="course-edit-title">Edit course {course.title}</h2>
+      <form onSubmit={onUpdate} className="course-edit-label-form">
         <div>
           <label>Title</label>
           <input
@@ -121,7 +122,7 @@ export default function CourseEdit() {
 
         <p>Links:</p>
         {course.link.map((item, index) => (
-          <>
+          <div className="course-edit-label-block">
             <input
               type="text"
               value={item}
@@ -139,7 +140,7 @@ export default function CourseEdit() {
               className="cource-edit-xmark"
               onClick={(event) => onDeleteLink(event, item)}
             />
-          </>
+          </div>
         ))}
         <button
           onClick={(event) => createLink(event)}
@@ -201,8 +202,9 @@ export default function CourseEdit() {
             className="course-edit-foto"
           />
         </div>
-
-        <button className="course-edit-button">Submit</button>
+        <div className="course-edit-title">
+          <button className="course-edit-button">Submit</button>
+        </div>
       </form>
     </div>
   );

@@ -1,4 +1,4 @@
-import "./App.sass";
+import "./styles/app.sass";
 import LoggedRoutes from "./routs/LoggedRoutes";
 import UnLoggedRoutes from "./routs/UnLoggedRoutes";
 import { BrowserRouter } from "react-router-dom";
@@ -12,10 +12,10 @@ function App() {
     <div className="app-grid">
       <BrowserRouter>
         <NavigationBar />
-        <div className="app-content ">
+        <main className="app-content ">
           {uid && <LoggedRoutes />}
           {!uid && <UnLoggedRoutes />}
-        </div>
+        </main>
       </BrowserRouter>
       <div className="app-footer">
         <Footer />

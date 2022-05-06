@@ -1,10 +1,46 @@
-.CoursesTeacher-for-teacher-grid
-  display: grid
-  grid-template-rows: auto 
-  grid-template-columns:  250px auto 250px
-  min-height: 100vh
+@media (max-width: 499px)
+  .courses-for-teacher-block
+    display: grid
+    grid-template-columns: repeat(1, 1fr)
+    grid-column-gap: 40px
+    grid-row-gap: 40px
+    padding: 20px
+        
+  .courses-for-teacher-grid
+    display: grid
+    grid-template-rows: auto 
+    grid-template-columns:  20px auto 20px
+    min-height: 100vh
+
+@media (min-width: 500px) and (max-width: 1099px)
+  .courses-for-teacher-block
+    display: grid
+    grid-template-columns: repeat(2, 1fr)
+    grid-column-gap: 40px
+    grid-row-gap: 40px
+    padding: 20px
+        
+  .courses-for-teacher-grid
+    display: grid
+    grid-template-rows: auto 
+    grid-template-columns:  100px auto 100px
+    min-height: 100vh
+
+@media (min-width: 1100px)
+  .courses-for-teacher-block
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    grid-column-gap: 40px
+    grid-row-gap: 40px
+    padding: 20px
+
+  .courses-for-teacher-grid
+    display: grid
+    grid-template-rows: auto 
+    grid-template-columns:  250px auto 250px
+    min-height: 100vh
   
-.CoursesTeacher-for-teacher-card
+.courses-for-teacher-card
   display: flex
   flex-direction: column
   width: 250px
@@ -17,20 +53,20 @@
   border-radius: 5px
   box-shadow: 2px 2px 10px #CEAAA0 
 
-.CoursesTeacher-for-teacher-card-title
+.courses-for-teacher-card-title
   height: 50%
   display: flex
   justify-content: center
   align-items: center
 
-.CoursesTeacher-for-teacher-img
+.courses-for-teacher-img
   width: 250px
   height: 200px
   object-fit: cover
   border-top-left-radius: 10px
   border-top-right-radius: 10px
 
-.CoursesTeacher-for-teacher-icon
+.courses-for-teacher-icon
   height: 30px
   overflow: hidden
 
@@ -67,15 +103,9 @@
 .tooltip:hover .tooltiptext 
   visibility: visible
 
-.CoursesTeacher-for-teacher-block
-  display: grid
-  grid-template-columns: repeat(3, 1fr)
-  grid-column-gap: 40px
-  grid-row-gap: 40px
-  padding: 20px
-  
 
-.CoursesTeacher-for-teacher-empty
+
+.courses-for-teacher-empty
   display: flex
   flex-direction: column
   width: 250px 
@@ -89,19 +119,19 @@
   border-radius: 5px  
   
 
-.CoursesTeacher-for-teacher-edit
+.courses-for-teacher-edit
   display: flex
   justify-content: space-between
   width: 100%
   padding: 0 10px 10px 10px
 
-.CoursesTeacher-for-teacher-content
+.courses-for-teacher-content
   display: flex
   flex-direction: column
   gap: 20px
   padding-top: 20px
 
 
-.CoursesTeacher-for-teacher-title
+.courses-for-teacher-title
   text-align: center
 

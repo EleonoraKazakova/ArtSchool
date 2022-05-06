@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { UIDProvider } from "./state/UIDProvider";
 import React from "react";
-import "./index.sass";
+import "./styles/index.sass";
 import App from "./App";
 
 const container = document.getElementById("root");

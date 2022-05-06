@@ -14,7 +14,6 @@ import "../styles/lougedRoutes.sass";
 
 export default function LoggedRoutes() {
   const currentUser = authentication.currentUser.uid;
-  console.log("currentUser:", currentUser);
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -25,10 +24,8 @@ export default function LoggedRoutes() {
     loadData(`users/${currentUser}`);
   }, []);
 
-  console.log("user:", user);
-
   return (
-    <div className="lougedRoutes-grid">
+    <section className="lougedRoutes-grid">
       <div className="lougedRoutes-content">
         <Routes>
           <Route
@@ -49,6 +46,6 @@ export default function LoggedRoutes() {
           <Route path="/login" element={<LogIn />} />
         </Routes>
       </div>
-    </div>
+    </section>
   );
 }

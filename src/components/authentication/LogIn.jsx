@@ -25,7 +25,7 @@ export default function LogIn() {
   return (
     <div className="login-grid">
       <div className="login-content">
-        <h2>Please login to access to our platform.</h2>
+        <h2 className="login-title">Please login to access to our platform.</h2>
         <form onSubmit={onLogin} className="login-form">
           <InputField setup={form.email} state={[email, setEmail]} />
           <InputField setup={form.password} state={[password, setPassword]} />
@@ -34,13 +34,17 @@ export default function LogIn() {
           </div>
         </form>
         <div className="login-block">
-          <p>Haven't you regestered yet? Then click here.</p>
+          <p className="login-title">
+            Haven't you regestered yet? Then click here.
+          </p>
           <button className="button-small">
             <Link to="/signup">Signup</Link>
           </button>
         </div>
         <div className="login-block">
-          <p>Did you forget your password? Then click here.</p>
+          <p className="login-title">
+            Did you forget your password? Then click here.
+          </p>
           <button className="button">
             <Link to="/recover-password">Recover password</Link>
           </button>

@@ -20,13 +20,13 @@ export default function Course() {
   if (course === null) return null;
 
   const coursLink = course.link.map((link, index) => (
-    <ExternalLink href={link} key={link}>
+    <ExternalLink href={link} key={link} className="course-link-text">
       Link {index + 1}
     </ExternalLink>
   ));
 
   const coursDocuments = course.documents.map((doc, index) => (
-    <ExternalLink href={doc} key={doc}>
+    <ExternalLink href={doc} key={doc} className="course-link-text">
       Document {index + 1}
     </ExternalLink>
   ));
@@ -38,11 +38,11 @@ export default function Course() {
         <img src={course.imgURL} className="course-img" />
         <div className="course-block-right">
           <p className="course-text">{course.description}</p>
-          <div>
+          <div className="course-list">
             <p className="course-link">Links:</p>
             {coursLink}
           </div>
-          <div>
+          <div className="course-list">
             <p className="course-link">Documents:</p>
             {coursDocuments}
           </div>

@@ -22,11 +22,10 @@ export default function NavigationBar() {
     }
   }, [uid]);
 
-  console.log("uid:", uid);
   const userName = uid !== null ? <p>{user.name}</p> : null;
 
   return (
-    <div className="navigationBar-content">
+    <nav className="navigationBar-content">
       <div className="navigationBar-left-block">
         <Link to="/">
           <img src={Logo} className="navigationBar-logo" />
@@ -39,10 +38,11 @@ export default function NavigationBar() {
             <p>Login</p>
           </Link>
         ) : null}
+
         {uid !== null && user.type === "teacher" ? (
           <>
             <Link to="/">
-              <p>CoursesTeacher</p>
+              <p>Courses</p>
             </Link>
             <Link to="/students-list">
               <p>Students</p>
@@ -50,16 +50,19 @@ export default function NavigationBar() {
             <p onClick={() => setUID(null)}>Logout</p>
           </>
         ) : null}
+
         {uid !== null && user.type === "student" ? (
           <>
             <Link to="/">
-              <p>CoursesTeacher</p>
+              <p>Courses</p>
             </Link>
 
             <p onClick={() => setUID(null)}>Logout</p>
           </>
         ) : null}
+
         <p className="navigationBar-user">{userName}</p>
+
         <div className="navigationBar-tooltip">
           <ExternalLink href="https://calendar.google.com/calendar/u/0/r?pli=1">
             <img
@@ -68,9 +71,10 @@ export default function NavigationBar() {
               alt="Google calendar"
             />
           </ExternalLink>
+
           <div className="navigationBar-tooltiptext">Calendar</div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
