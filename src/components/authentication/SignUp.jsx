@@ -23,12 +23,11 @@ export default function SignUp() {
     const newUser = { name: name, type: "student" };
 
     const payload = await addDocumentWithId("users", newUID, newUser);
-    console.log("payload.error:", payload.error);
 
     if (payload.error) alert("Couldn't create user");
     else {
       setUID(newUID);
-      navigate("/homepage");
+      navigate("/");
     }
   }
 

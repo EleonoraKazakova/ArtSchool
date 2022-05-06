@@ -41,9 +41,6 @@ export default function LoggedRoutes() {
           />
           <Route path="/course-create" element={<CourseCreate />} />
           <Route path="/students-list" element={<StudentsList />} />
-          <Route path="/signup" element={<SignUp />} />
-
-          <Route path="/login" element={<LogIn />} />
         </Routes>
       </div>
     </section>
