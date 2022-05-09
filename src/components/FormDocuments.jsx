@@ -19,6 +19,7 @@ export default function FormDocuments({ state }) {
           type="file"
           key={index}
           accept="application/pdf, application/doc, application/docx"
+          // Nesting -5, come on, you could have created a var for this
           onChange={(event) => {
             setDocuments(
               documents.map((el, i) =>

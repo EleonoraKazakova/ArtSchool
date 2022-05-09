@@ -24,16 +24,16 @@ export default function LoggedRoutes() {
     loadData(`users/${currentUser}`);
   }, []);
 
+  // Properties
+  const homeRoute =
+    user.type === "teacher" ? <CoursesTeacher /> : <CoursesStudents />;
+
   return (
     <section className="lougedRoutes-grid">
       <div className="lougedRoutes-content">
         <Routes>
-          <Route
-            path="/"
-            element={
-              user.type === "teacher" ? <CoursesTeacher /> : <CoursesStudents />
-            }
-          />
+          {/* Nesting -1, use a properties to pass the final result, see example */}
+          <Route path="/" element={homeRoute} />
           <Route path="/:CoursesTeacher/:course" element={<Course />} />
           <Route
             path="/:CoursesTeacher/:course/edit"

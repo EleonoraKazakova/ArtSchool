@@ -4,6 +4,7 @@ import WelcomePage from "../components/WelcomePage";
 import RecoverPassword from "../components/authentication/RecoverPasssword";
 import SignUp from "../components/authentication/SignUp";
 
+// good
 export default function UnLoggedRoutes() {
   return (
     <section>
