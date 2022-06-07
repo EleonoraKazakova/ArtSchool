@@ -19,7 +19,7 @@ export default function WelcomePage() {
   return (
     <div>
       <div className="welcompage-big-img ">
-        <h1 className="welcompage-title">Start studing art!</h1>
+        <h1 className="welcompage-title">We will talk about art...</h1>
       </div>
       <h2 className="welcompage-content">
         Here you will find a lot of information abourt artist of different eras
